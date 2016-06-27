@@ -1,6 +1,6 @@
 ---
 title: "Consumer reports AVR data"
-output: html_document
+output: word_document
 ---
 
 
@@ -43,3 +43,8 @@ plot(Aggregate_score, data_present$Total.Patients, pch = 16, cex = 1.3,col = "gr
 abline(lm(data_present$Total.Patients ~ Aggregate_score))
 ```
 
+```{r, echo=FALSE}
+#Fitting a regression line for 30 day no-complication rate plotted against survival rate
+plot(data_present$Survival, data_present$No.complication, pch = 16, col = "purple", main = "No complication rate plotted against survival rate", xlab = "No complication rate", ylab = "Survival rate")
+abline(lm(data_present$Survival ~ data_present$No.complication))
+```
