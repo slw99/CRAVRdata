@@ -3,8 +3,9 @@ title: "Consumer reports AVR data"
 output: word_document
 ---
 
+These summary statistics capture the number of Aortic valve replacement surgeries reported by each hospital between 2011 and 2014, along with the 30-day survival rate and percentage of patients with none of 5 major kinds of complications. (Complications include  five serious complications of heart-bypass surgery during their hospitalization: extended breathing support on a ventilator, an infection in the breastbone incision, kidney failure, a stroke, or a repeat operation for postoperative bleeding or other causes).
 
-```{r}
+```{r, echo=FALSE}
 setwd("C:/Users/steph/Documents/AVR/Consumer Report data/Data/raw_data")
 data<-read.csv("Raw results (original download).csv")
 
@@ -17,17 +18,17 @@ data_present<-data[complete.cases(data),]
 #Creating new variable of No complication rate added to survival rate
 Aggregate_score<-data_present$No.complication + data_present$Survival
 
-#Stats on data present
-summary(data_present[,4:6])
 ```
 
-
+Plotting the no-complication rate against total patients revealed a weak relationship between volume of operations completed.
 
 ```{r, echo=FALSE}
 #Fitting a regression line for 30 day no-complication rate plotted against total patients
 plot(data_present$No.complication, data_present$Total.Patients, pch = 16, col = "red", main = "No complication rate plotted against total patients", xlab = "No complication rate", ylab = "Total patients undergoing AVR 2011-2014")
 abline(lm(data_present$Total.Patients ~ data_present$No.complication))
 ```
+
+Plotting the survival rate against total patients also revealed a weak relationship. However, particularly with low-volume centers with low sample size (n<20), the statistical significance of the differences between centers is questionable.
 
 ```{r, echo=FALSE}
 
@@ -36,6 +37,8 @@ plot(data_present$Survival, data_present$Total.Patients, pch = 16, col = "blue",
 abline(lm(data_present$Total.Patients ~ data_present$Survival))
 
 ```
+
+The aggregate score was calculated by adding the two metrics for each hospital (no complication rate and survival rate).
 
 ```{r, echo=FALSE}
 #Fitting a regression line for Aggregate score plotted against total patients
